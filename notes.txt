@@ -1,0 +1,24 @@
+pip install flask
+
+create homepage, add templates folder with index.html
+
+/c:/Mylls/School/ITCC 40 - Web design/python/
+    notes.txt
+    app.py
+    templates/
+        index.html
+
+for student, details in students.items():
+    print(f"Student: {student}")        <<- student's first key value per pair is called
+    for key, value in details.items():
+        print(f"  {key}: {value}")
+
+^^ 
+
+    Colors
+
+            #0e012d = very dark blue
+            #f6002d = red
+            #e7ddc8 = beige/Dirty White
+            #bc9434 = Xavier Bronze
+            #2c3c74 = Xavier Blue
