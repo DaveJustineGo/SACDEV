@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organization & Student Leaders</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f0f8ff; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: #ffffff; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        button { margin: 5px; padding: 5px 10px; cursor: pointer; border: none; border-radius: 5px; }
+        .add-btn { background-color: #008CBA; color: white; }
+        .delete-btn { background-color: #f44336; color: white; }
+        .update-btn { background-color: #ff9800; color: white; }
+    </style>
+    <script>
+        function addEntry(tableId) {
+            const table = document.getElementById(tableId);
+            const newRow = table.insertRow(-1);
+            for (let i = 0; i < table.rows[0].cells.length; i++) {
+                let cell = newRow.insertCell(i);
+                if (i === table.rows[0].cells.length - 1) {
+                    cell.innerHTML = '<button class="update-btn" onclick="updateEntry(this)">Update</button> ' +
+                                     '<button class="delete-btn" onclick="deleteEntry(this)">Delete</button>';
+                } else {
+                    cell.innerHTML = '<input type="text">';
+                }
+            }
+        }
+        
+        function deleteEntry(btn) {
+            const row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        function updateEntry(btn) {
+            const row = btn.parentNode.parentNode;
+            const cells = row.getElementsByTagName('td');
+            for (let i = 0; i < cells.length - 1; i++) {
+                let cell = cells[i];
+                let input = document.createElement('input');
+                input.type = 'text';
+                input.value = cell.innerText;
+                cell.innerText = '';
+                cell.appendChild(input);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Organizations</h1>
+    <button class="add-btn" onclick="addEntry('organizationsTable')">Add Organization</button>
+    <table id="organizationsTable">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>President</th>
+            <th>Officers</th>
+            <th>Constitution</th>
+            <th>Actions</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Sample Organization</td>
+            <td>Kyle Pimentel</td>
+            <td>Dave, Justine, Myless</td>
+            <td><a href="#">View Constitution</a></td>
+            <td><button class="update-btn" onclick="updateEntry(this)">Update</button> <button class="delete-btn" onclick="deleteEntry(this)">Delete</button></td>
+        </tr>
+    </table>
+    
+    <h1>Student Leaders</h1>
+    <button class="add-btn" onclick="addEntry('leadersTable')">Add Leader</button>
+    <table id="leadersTable">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Organization</th>
+            <th>Actions</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Myles Go</td>
+            <td>Vice President</td>
+            <td>Sample Organization</td>
+            <td><button class="update-btn" onclick="updateEntry(this)">Update</button> <button class="delete-btn" onclick="deleteEntry(this)">Delete</button></td>
+        </tr>
+    </table>
+
+    <h1>Student Documents</h1>
+    <button class="add-btn" onclick="addEntry('documentsTable')">Add Document</button>
+    <table id="documentsTable">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>File Type</th>
+            <th>Download</th>
+            <th>Actions</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Report.pdf</td>
+            <td>PDF</td>
+            <td><a href="#">Download</a></td>
+            <td><button class="update-btn" onclick="updateEntry(this)">Update</button> <button class="delete-btn" onclick="deleteEntry(this)">Delete</button></td>
+        </tr>
+    </table>
+</body>
+</html>
