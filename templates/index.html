@@ -3,182 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Layout</title>
+    <title>Organizations</title>
     <style>
 
-/*      Colors
-
-        #0e012d = very dark blue
-        #f6002d = red
-        #e7ddc8 = beige/Dirty White
-        #bc9434 = Xavier Bronze
-        #2c3c74 = Xavier Blue
- */
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
+        /*      Colors
         
-        header {
-            height: 3rem;
-            background: #ffffff;
-            color: #2c3c74;
-            text-align: center;
-            font-size: 2rem;
-            font-weight: bold;
-            line-height: 3rem; 
-            font-family:'Times New Roman', Times, serif;
-        }
-        
-        .container {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-        
-        .sidebar {
-            width: 3rem;
-            background: #2c3c74;
-            color: white;
-            text-align: left;
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
-        
-        .content {
-            flex: 1;
-            padding: 10px;
-            overflow: auto;
-        }
-        
-        .contain1 {
-            border-style: solid;
-            border-color: #0e012d;
-            border-radius: 1rem;
-            background-color: #ffffff;
-            flex: 1;
-            padding: 10px;
-            margin: 10px;
-        }
-        
-        footer {
-            height: 1rem;
-            background: #bc9434;
-            color: white;
-            text-align: center;
-            line-height: 1rem;
-            font-size: 0.8rem;
-        }
-
-        
-        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: #e7ddc8; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #0e012d; color: white; }
-        button { margin: 5px; padding: 5px 10px; cursor: pointer; border: none; border-radius: 5px; }
-        .add-btn { background-color: #008CBA; color: white; }
-        .delete-btn { background-color: #f44336; color: white; }
-        .update-btn { background-color: #ff9800; color: white; }
-
-    </style>
-    <script> // javascript below
-        function showAlert() {
-            alert("Work in Progress!");
-        }
-
-        function toggleSidebar() {
-
-            var sidebar = document.querySelector('.sidebar');
-            if (sidebar.style.width === '10rem') {
-            sidebar.style.width = '3rem';
-            } else {
-            sidebar.style.width = '10rem';
-            }
-        }
-
-        function addEntry(tableId) {
-            const table = document.getElementById(tableId);
-            const newRow = table.insertRow(-1);
-            for (let i = 0; i < table.rows[0].cells.length; i++) {
-                let cell = newRow.insertCell(i);
-                if (i === table.rows[0].cells.length - 1) {
-                    cell.innerHTML = '<button class="update-btn" onclick="updateEntry(this)">Update</button> ' +
-                                     '<button class="delete-btn" onclick="deleteEntry(this)">Delete</button>';
-                } else {
-                    if (i == 0) {
-                    cell.innerHTML = '<input type="text" size="3">';
-                    } else {
-                    cell.innerHTML = '<input type="text">';
-                    }
+                #0e012d = very dark blue
+                #f6002d = red
+                #e7ddc8 = beige/Dirty White
+                #bc9434 = Xavier Bronze
+                #2c3c74 = Xavier Blue
+         */
+                body {
+                    margin: 0;
+                    font-family: Arial, sans-serif;
+                    display: flex;
+                    flex-direction: column;
+                    height: 100vh;
                 }
-            }
-        }
+                
+                header {
+                    height: 3rem;
+                    background: #ffffff;
+                    color: #2c3c74;
+                    text-align: center;
+                    font-size: 2rem;
+                    font-weight: bold;
+                    line-height: 3rem; 
+                    font-family:'Times New Roman', Times, serif;
+                }
+                
+                .container {
+                    display: flex;
+                    flex: 1;
+                    overflow: hidden;
+                }
+                
+                .sidebar {
+                    width: 3rem;
+                    background: #2c3c74;
+                    color: white;
+                    text-align: left;
+                    overflow-x: hidden;
+                    overflow-y: auto;
+                }
+                
+                .content {
+                    flex: 1;
+                    padding: 10px;
+                    overflow: auto;
+                }
+                
+                .contain1 {
+                    border-style: solid;
+                    border-color: #0e012d;
+                    border-radius: 1rem;
+                    background-color: #ffffff;
+                    flex: 1;
+                    padding: 10px;
+                    margin: 10px;
+                }
+                
+                footer {
+                    height: 1rem;
+                    background: #bc9434;
+                    color: white;
+                    text-align: center;
+                    line-height: 1rem;
+                    font-size: 0.8rem;
+                }
         
-        function deleteEntry(btn) {
-            const row = btn.parentNode.parentNode;
-            row.parentNode.removeChild(row);
+                
+                table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: #e7ddc8; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                th { background-color: #0e012d; color: white; }
+                button { margin: 5px; padding: 5px 10px; cursor: pointer; border: none; border-radius: 5px; }
+                .add-btn { background-color: #008CBA; color: white; }
+                .delete-btn { background-color: #f44336; color: white; }
+                .update-btn { background-color: #ff9800; color: white; }
+        
+            </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetchOrganizations();
+        });
+
+        function fetchOrganizations() {
+            fetch("/organizations")
+                .then(response => response.json())
+                .then(data => {
+                    const table = document.getElementById("organizationsTable");
+                    table.innerHTML = "";
+                    data.forEach(org => {
+                        let row = table.insertRow();
+                        row.innerHTML = `
+                            <td>${org.id}</td>
+                            <td>${org.name}</td>
+                            <td>${org.president}</td>
+                            <td>${org.officers}</td>
+                            <td>${org.constitution}</td>
+                            <td>
+                                <button onclick="updateOrganization(${org.id})">Update</button>
+                                <button onclick="deleteOrganization(${org.id})">Delete</button>
+                            </td>
+                        `;
+                    });
+                });
         }
 
-        function updateEntry(btn) {
-            const row = btn.parentNode.parentNode;
-            const cells = row.getElementsByTagName('td');
-            for (let i = 0; i < cells.length - 1; i++) {
-                let cell = cells[i];
-                let input = document.createElement('input');
-                input.type = 'text';
-                input.value = cell.innerText;
-                cell.innerText = '';
-                cell.appendChild(input);
+        function addOrganization() {
+            const name = document.getElementById("name").value;
+            const president = document.getElementById("president").value;
+            const officers = document.getElementById("officers").value;
+            const constitution = document.getElementById("constitution").value;
+
+            fetch("/organizations", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, president, officers, constitution })
+            }).then(response => response.json())
+              .then(() => fetchOrganizations());
+        }
+
+        function deleteOrganization(id) {
+            fetch(`/organizations/${id}`, { method: "DELETE" })
+                .then(() => fetchOrganizations());
+        }
+
+        function updateOrganization(id) {
+            const newName = prompt("Enter new name:");
+            const newPresident = prompt("Enter new president:");
+            const newOfficers = prompt("Enter new officers:");
+            const newConstitution = prompt("Enter new constitution:");
+
+            if (newName && newPresident && newOfficers && newConstitution) {
+                fetch(`/organizations/${id}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        name: newName,
+                        president: newPresident,
+                        officers: newOfficers,
+                        constitution: newConstitution
+                    })
+                }).then(response => response.json())
+                .then(() => fetchOrganizations());
             }
         }
+
     </script>
 </head>
-<!-- // BODY // -->
 <body>
     <!-- HEADER -->
     <header>Student Activities and Leadership Development</header>
     
-    <!-- ROOT CONTAINER -->
-    <div class="container">
-        <!-- SIDE BAR -->
-        <div class="sidebar">
-            <button onclick="toggleSidebar()" style="width: 3rem; height: 3rem; background-color: #283971; color: white; border:blue;border-style: solid;">X</button>
-
-        </div>
+    
         <!-- MAIN CONTENT -->
         <div class="content" style="background-color: #e4ecf4;">
-            <div class="contain1">
-                <p>This is a simple layout with internal CSS and JavaScript.</p>
-            </div>
+            <!-- SIDE BAR -->
+            <!-- <div class="sidebar">
+                <button onclick="toggleSidebar()" style="width: 3rem; height: 3rem; background-color: #283971; color: white; border:blue;border-style: solid;">X</button>
+
+            </div> -->
+    
             <div class="contain1">
                 <h1>Organizations</h1>
-                <button class="add-btn" onclick="addEntry('organizationsTable')">Add Organization</button>
-                <table id="organizationsTable">
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>President</th>
-                        <th>Officers</th>
-                        <th>Constitution</th>
-                        <th>Actions</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Sample Organization</td>
-                        <td>Kyle Pimentel</td>
-                        <td>Dave, Justine, Myless</td>
-                        <td><a href="#">View Constitution</a></td>
-                        <td><button class="update-btn" onclick="updateEntry(this)">Update</button> <button class="delete-btn" onclick="deleteEntry(this)">Delete</button></td>
-                    </tr>
-                </table></div>
+            
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>President</th>
+                            <th>Officers</th>
+                            <th>Constitution</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="organizationsTable"></tbody>
+                </table>
+
+                <h2>Add Organization</h2>
+                <input type="text" id="name" placeholder="Name">
+                <input type="text" id="president" placeholder="President">
+                <input type="text" id="officers" placeholder="Officers">
+                <input type="text" id="constitution" placeholder="Constitution">
+                <button onclick="addOrganization()">Add</button>
+                
+            
+            
+            </div>
             <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
             <button onclick="showAlert()">Click Me</button>
         </div>
-    </div>
-    
+    <!-- </div>
+    <h1>Organizations</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>President</th>
+                <th>Officers</th>
+                <th>Constitution</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="organizationsTable"></tbody>
+    </table>
+
+    <h2>Add Organization</h2>
+    <input type="text" id="name" placeholder="Name">
+    <input type="text" id="president" placeholder="President">
+    <input type="text" id="officers" placeholder="Officers">
+    <input type="text" id="constitution" placeholder="Constitution">
+    <button onclick="addOrganization()">Add</button>
+     -->
     <footer>Under Development</footer>
-    
 </body>
 </html>
