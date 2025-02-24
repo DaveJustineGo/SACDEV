@@ -83,48 +83,6 @@
                 .update-btn { background-color: #ff9800; color: white; }
         
                 
-                    
-                /* The popup container */
-                .popup {
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    background: white;
-                    padding: 20px;
-                    border-style: solid;
-                    border-color: #f6002d;
-                    border-radius: 8px;
-                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-                    /* width: 300px; */
-                    text-align: center;
-                    display: none; /* Hidden by default */
-                    z-index: 1000;
-                }
-
-                /* Close button */
-                .close-btn {
-                    background: red;
-                    color: white;
-                    border: none;
-                    padding: 5px 10px;
-                    cursor: pointer;
-                    border-radius: 5px;
-                    margin-top: 10px;
-                }
-
-                /* Background overlay */
-                .overlay {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: rgba(0, 0, 0, 0.5);
-                    display: none;
-                    z-index: 999;
-                }
-
             </style>
 
     <script>
@@ -151,7 +109,7 @@
                             <td>${org.officers}</td>
                             <td>${org.constitution}</td>
                             <td>
-                                <button onclick="updateOrganization(${org.id}, '${org.name}', '${org.president}', '${org.officers}', '${org.constitution}')">Update</button>
+                                <button onclick="updateOrganization(${org.id})">Update</button>
                                 <button onclick="deleteOrganization(${org.id})">Delete</button>
                             </td>
                         `;
@@ -178,55 +136,25 @@
                 .then(() => fetchOrganizations());
         }
 
-        function updateOrganization(id, name, president, officers, constitution) {
-            openPopup();
-            document.getElementById("cID").innerText = id;
-            document.getElementById("cName").value = name;
-            document.getElementById("cPresident").value = president;
-            document.getElementById("cOfficers").value = officers;
-            document.getElementById("cConstitution").value = constitution;
-            const newName = document.getElementById("cName").value;
-            const newPresident =  document.getElementById("cPresident").value;
-            const newOfficers = document.getElementById("cOfficers").value;
-            const newConstitution = document.getElementById("cConstitution").value;
+        function updateOrganization(id) {
+            const newName = prompt("Enter new name:");
+            const newPresident = prompt("Enter new president:");
+            const newOfficers = prompt("Enter new officers:");
+            const newConstitution = prompt("Enter new constitution:");
 
-            
-            // if (newName && newPresident && newOfficers && newConstitution) {
-            //     fetch(`/organizations/${id}`, {
-            //         method: "PUT",
-            //         headers: { "Content-Type": "application/json" },
-            //         body: JSON.stringify({
-            //             name: newName,
-            //             president: newPresident,
-            //             officers: newOfficers,
-            //             constitution: newConstitution
-            //         })
-            //     }).then(response => response.json())
-            //     .then(() => fetchOrganizations());
-            // }
-        }
-
-        function submitUpdate() {
-            const id = document.getElementById("cID").innerText;
-            const newName = document.getElementById("cName").value;
-            const newPresident = document.getElementById("cPresident").value;
-            const newOfficers = document.getElementById("cOfficers").value;
-            const newConstitution = document.getElementById("cConstitution").value;
-
-            fetch(`/organizations/${id}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    name: newName,
-                    president: newPresident,
-                    officers: newOfficers,
-                    constitution: newConstitution
-                })
-            }).then(response => response.json())
-            .then(() => {
-                fetchOrganizations(); // Refresh table
-                closePopup(); // Close popup after update
-            });
+            if (newName && newPresident && newOfficers && newConstitution) {
+                fetch(`/organizations/${id}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        name: newName,
+                        president: newPresident,
+                        officers: newOfficers,
+                        constitution: newConstitution
+                    })
+                }).then(response => response.json())
+                .then(() => fetchOrganizations());
+            }
         }
 
         // Table Sorting
@@ -258,15 +186,6 @@
             } else {
             sidebar.style.width = '10rem';
             }
-        }
-        function openPopup() {
-            document.getElementById("popup").style.display = "block";
-            document.getElementById("overlay").style.display = "block";
-        }
-
-        function closePopup() {
-            document.getElementById("popup").style.display = "none";
-            document.getElementById("overlay").style.display = "none";
         }
 
 
@@ -302,7 +221,7 @@
                                 <th onclick="sortTable(2)">President</th>
                                 <th>Officers</th>
                                 <th>Constitution</th>
-                                <th onclick="openPopup()">Actions</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="organizationsTable"></tbody>
@@ -319,50 +238,31 @@
                 
                 </div>
                 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-                <button onclick="showAlert()">Click Me</button><!-- Button to open popup -->
-                <button onclick="openPopup()">Show Popup</button>
-                
-                <!-- The popup -->
-                <div class="overlay" id="overlay" onclick="closePopup()"></div>
-                <div class="popup" id="popup">
-                    <h2>Update Organization</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>President</th>
-                                <th>Officers</th>
-                                <th>Constitution</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td id="cID"></td>
-                                <td>
-                                    <input type="text" id="cName" placeholder="Name">
-                                </td>
-                                <td>
-                                    <input type="text" id="cPresident" placeholder="President">
-                                </td>
-                                <td>
-                                    <input type="text" id="cOfficers" placeholder="Officers">
-
-                                </td>
-                                <td>
-                                    <input type="text" id="cConstitution" placeholder="Constitution">
-
-                                </td>
-                                <td id="uActions">
-                                    <button onclick="submitUpdate()">Submit</button>
-                                    <button class="close-btn" onclick="closePopup()">Cancel</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <button onclick="showAlert()">Click Me</button>
             </div>
+        <!-- </div>
+        <h1>Organizations</h1>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>President</th>
+                    <th>Officers</th>
+                    <th>Constitution</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="organizationsTable"></tbody>
+        </table>
+
+        <h2>Add Organization</h2>
+        <input type="text" id="name" placeholder="Name">
+        <input type="text" id="president" placeholder="President">
+        <input type="text" id="officers" placeholder="Officers">
+        <input type="text" id="constitution" placeholder="Constitution">
+        <button onclick="addOrganization()">Add</button>
+        -->
 
     </div> <!-- END OF ROOT CONTAINER -->
 
