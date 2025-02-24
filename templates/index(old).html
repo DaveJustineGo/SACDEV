@@ -34,18 +34,43 @@
             row.parentNode.removeChild(row);
         }
 
-        function updateEntry(btn) {
-            const row = btn.parentNode.parentNode;
-            const cells = row.getElementsByTagName('td');
-            for (let i = 0; i < cells.length - 1; i++) {
-                let cell = cells[i];
-                let input = document.createElement('input');
-                input.type = 'text';
-                input.value = cell.innerText;
-                cell.innerText = '';
-                cell.appendChild(input);
-            }
-        }
+        function updateEntry(btn, id) {
+    const row = btn.parentNode.parentNode;
+    const cells = row.getElementsByTagName('td');
+
+    // Populate the form with the existing data
+    document.getElementById("update-id").value = id;
+    document.getElementById("update-name").value = cells[1].innerText;
+    document.getElementById("update-president").value = cells[2].innerText;
+    document.getElementById("update-officers").value = cells[3].innerText;
+    document.getElementById("update-constitution").value = cells[4].innerText;
+
+    // Show the update form
+    document.getElementById("updateForm").style.display = "block";
+}
+
+// Function to send updated data to the backend
+function submitUpdate() {
+    const id = document.getElementById("update-id").value;
+    const name = document.getElementById("update-name").value;
+    const president = document.getElementById("update-president").value;
+    const officers = document.getElementById("update-officers").value;
+    const constitution = document.getElementById("update-constitution").value;
+
+    fetch(`/organizations/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, president, officers, constitution })
+    })
+    .then(response => response.json())
+    .then(() => {
+        fetchOrganizations(); // Refresh table
+        document.getElementById("updateForm").style.display = "none"; // Hide form
+    });
+}
+
+            
+        
     </script>
 </head>
 <body>
