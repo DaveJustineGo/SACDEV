@@ -1,6 +1,27 @@
 pip install flask
 
-create homepage, add templates folder with index.html
+TO DO LIST :
+    Priority : 
+        Create page for user and org profiles
+
+    WebService :
+        User Profiles
+        Organization Profiles
+
+    HTML & CSS : 
+        User Page
+        Organization Page
+        Clicking Org and Student names will redirect to their appropriate page with profile
+
+
+    JavaScript :
+        Search Method
+        User Profiles
+
+    DataBase :
+        User Profiles
+        Organization Profiles
+
 
 /c:/Mylls/School/ITCC 40 - Web design/python/
     notes.txt
@@ -8,10 +29,7 @@ create homepage, add templates folder with index.html
     templates/
         index.html
 
-for student, details in students.items():
-    print(f"Student: {student}")        <<- student's first key value per pair is called
-    for key, value in details.items():
-        print(f"  {key}: {value}")
+
 
 ^^ 
 

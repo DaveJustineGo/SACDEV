@@ -129,13 +129,12 @@
 
     <script>
 
-        // INITIALIZER
+            // INITIALIZER
         document.addEventListener("DOMContentLoaded", function() {
             fetchOrganizations();
         });
 
-        // TABLE FUNCTIONS 
-
+            // TABLE FUNCTIONS 
         function fetchOrganizations() {
             fetch("/organizations")
                 .then(response => response.json())
@@ -159,6 +158,7 @@
                 });
         }
 
+            // Add organization
         function addOrganization() {
             const name = document.getElementById("name").value;
             const president = document.getElementById("president").value;
@@ -173,11 +173,13 @@
               .then(() => fetchOrganizations());
         }
 
+            // Delete organization
         function deleteOrganization(id) {
             fetch(`/organizations/${id}`, { method: "DELETE" })
                 .then(() => fetchOrganizations());
         }
 
+            // Start update process
         function updateOrganization(id, name, president, officers, constitution) {
             openPopup();
             document.getElementById("cID").innerText = id;
@@ -206,6 +208,7 @@
             // }
         }
 
+            // Submit Update
         function submitUpdate() {
             const id = document.getElementById("cID").innerText;
             const newName = document.getElementById("cName").value;
