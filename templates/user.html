@@ -1,0 +1,120 @@
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organization Name Here</title>
+    <style> 
+        /* Migrated */
+    </style>
+    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="../static/script.js" defer></script>
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    <script>
+        // Migrated
+    </script>
+</head>
+    <!-- // BODY // -->
+<body>
+    <!-- HEADER -->
+    <header><div class="sidebar_button_container" id="toggleSidebar">X</div>
+    <div class="headline">Student Activities and Leadership Development</div></header>
+    
+    
+    <!-- ROOT CONTAINER -->
+    <div class="container">
+        
+        <!-- SIDE BAR -->
+        <div class="sidebar">
+            <!-- <button onclick="toggleSidebar()" style="width: 2.3rem; height: 2.3rem; background-color: #283971; color: white; border:#f6002d;border-style: solid;">X</button> -->
+
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="content" style="background-color: #e4ecf4;">
+    
+                <div class="contain1">
+                    <h1>Organization Name Here</h1>
+
+                    <h2>Misson and Vision</h2>
+                    <p>Content Here</p>
+
+                    <h3>Description</h3>
+                    <p>Content Here</p>
+                
+                    <hr>
+                    <h2>Organization Members</h2>
+                    <!-- TABLE -->
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable(0)">SID</th>
+                                <th onclick="sortTable(1)">Student Name</th>
+                                <th onclick="sortTable(2)">Role</th>
+                                <th onclick="openPopup()">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="organizationsTable"></tbody>
+                    </table>
+
+                    <h2>Add Student</h2>
+                    <input type="text" id="name" placeholder="Name">
+                    <input type="text" id="president" placeholder="President">
+                    <input type="text" id="officers" placeholder="Officers">
+                    <input type="text" id="constitution" placeholder="Constitution">
+                    <button onclick="addOrganization()">Add</button>
+                    
+                
+                
+                </div>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                <button onclick="showAlert()">Click Me</button><!-- Button to open popup -->
+                <button onclick="openPopup()">Show Popup</button>
+                
+                <!-- The popup -->
+                <div class="overlay" id="overlay" onclick="closePopup()"></div>
+                <div class="popup" id="popup">
+                    <h2>Update Organization</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>President</th>
+                                <th>Officers</th>
+                                <th>Constitution</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="cID"></td>
+                                <td>
+                                    <input type="text" id="cName" placeholder="Name">
+                                </td>
+                                <td>
+                                    <input type="text" id="cPresident" placeholder="President">
+                                </td>
+                                <td>
+                                    <input type="text" id="cOfficers" placeholder="Officers">
+
+                                </td>
+                                <td>
+                                    <input type="text" id="cConstitution" placeholder="Constitution">
+
+                                </td>
+                                <td id="uActions">
+                                    <button onclick="submitUpdate()">Submit</button>
+                                    <button class="close-btn" onclick="closePopup()">Cancel</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+    </div> <!-- END OF ROOT CONTAINER -->
+
+    <!-- FOOTER -->
+    <footer>Under Development</footer>
+</body>
