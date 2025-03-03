@@ -1,0 +1,119 @@
+
+/*      Colors
+
+        #0e012d = very dark blue
+        #f6002d = red
+        #e7ddc8 = beige/Dirty White
+        #bc9434 = Xavier Bronze
+        #2c3c74 = Xavier Blue
+    */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        header {
+            height: 3rem;
+            background: #ffffff;
+            color: #2c3c74;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            line-height: 3rem; 
+            font-family:'Times New Roman', Times, serif;
+        }
+        
+        .container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .sidebar {
+            width: 3rem;
+            background: #2c3c74;
+            color: white;
+            text-align: left;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        
+        .content {
+            flex: 1;
+            padding: 10px;
+            overflow: auto;
+        }
+        
+        .contain1 {
+            border-style: solid;
+            border-color: #0e012d;
+            border-radius: 1rem;
+            background-color: #e7ddc8;
+            flex: 1;
+            padding: 10px;
+            margin: 10px;
+        }
+        
+        footer {
+            height: 1rem;
+            background: #bc9434;
+            color: white;
+            text-align: center;
+            line-height: 1rem;
+            font-size: 0.8rem;
+        }
+
+        
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: #e7ddc8; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #0e012d; color: white; }
+        button { margin: 5px; padding: 5px 10px; cursor: pointer; border: none; border-radius: 5px; }
+        .add-btn { background-color: #008CBA; color: white; }
+        .delete-btn { background-color: #f44336; color: white; }
+        .update-btn { background-color: #ff9800; color: white; }
+
+        
+            
+        /* The popup container */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-style: solid;
+            border-color: #f6002d;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            /* width: 300px; */
+            text-align: center;
+            display: none; /* Hidden by default */
+            z-index: 1000;
+        }
+
+        /* Close button */
+        .close-btn {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        /* Background overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 999;
+        }
