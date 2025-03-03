@@ -2,6 +2,8 @@ pip install flask
 
 TO DO LIST :
     Priority : 
+        currently reworking DataBase
+        add new database functions 
         Create page for user and org profiles
 
     WebService :

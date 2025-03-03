@@ -13,22 +13,35 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-        # CREATE TABLE OBJECT
+        # CREATE TABLE OBJECT for database
 class Organization(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    org_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     president = db.Column(db.String(255), nullable=False)
-    officers = db.Column(db.Text, nullable=False)
-    constitution = db.Column(db.Text, nullable=False)
+    mav = db.Column(db.Text, nullable=False)
+    desc = db.Column(db.Text, nullable=False)
+    # Relationship with Student Table (One-to-Many)
+    students = db.relationship('Student', backref='organization', lazy=True)
 
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "president": self.president,
-            "officers": self.officers,
-            "constitution": self.constitution
-        }
+class Student(db.Model):
+    sid = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    role = db.Column(db.String(50), nullable=True)
+    org_id = db.Column(db.Integer, db.ForeignKey('org.id'), nullable=False)
+
+def org_dict1(self):
+    return {
+        "org_id": self.id,
+        "name": self.name,
+        "president": self.president,
+    }
+
+def org_dict2(self):
+    return {
+        "org_id": self.id,
+        "name": self.name,
+        "president": self.president,
+    }
 
         # RETURN MAIN PAGE
 @app.route('/')
@@ -39,7 +52,7 @@ def home():
 @app.route('/organizations', methods=['GET'])
 def get_organizations():
     organizations = Organization.query.all()
-    return jsonify([org.to_dict() for org in organizations])
+    return jsonify([org.org_dict1() for org in organizations])
 
         # ADD NEW ORGANIZATION
 @app.route('/organizations', methods=['POST'])
@@ -53,7 +66,7 @@ def add_organization():
     )
     db.session.add(new_org)
     db.session.commit()
-    return jsonify(new_org.to_dict()), 201
+    return jsonify(new_org.org_dict1()), 201
 
         # UPDATE BY ID
 @app.route('/organizations/<int:org_id>', methods=['PUT'])
@@ -69,7 +82,7 @@ def update_organization(org_id):
     org.constitution = data.get("constitution", org.constitution)
 
     db.session.commit()
-    return jsonify(org.to_dict())
+    return jsonify(org.org_dict1())
 
 
         #  DELETE
